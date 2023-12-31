@@ -18,16 +18,14 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
   curl -LO https://github.com/yarnpkg/yarn/releases/download/v1.22.19/yarn_1.22.19_all.deb \
   && dpkg -i yarn_1.22.19_all.deb \
   && rm yarn_1.22.19_all.deb && \
-  set -xe; \
-  if [ "$(uname -m)" ==  "aarch64" ] || [ "$(uname -m)" ==  "arm64" ] || [ "$(uname -m)" == "armv7l"  ]; \
+  if [ "$(uname -m)" ==  "aarch64" ] || [ "$(uname -m)" ==  "arm64" ] || [ "$(uname -m)" == "armv7l" ]; \
   then \
-  pandoc_arch=arm64; \
+  curl -L https://github.com/jgm/pandoc/releases/download/3.1.3/pandoc-3.1.3-1-arm64.deb > pandoc-3.1.3-1.deb; \
   else \
-  pandoc_arch=amd64; \
-  fi ;\
-  curl -LO https://github.com/jgm/pandoc/releases/download/3.1.3/pandoc-3.1.3-1-$pandoc_arch.deb \
-  && dpkg -i pandoc-3.1.3-1-$pandoc_arch.deb \
-  && rm pandoc-3.1.3-1-$pandoc_arch.deb && \
+  curl -L https://github.com/jgm/pandoc/releases/download/3.1.3/pandoc-3.1.3-1-amd64.deb > pandoc-3.1.3-1.deb; \
+  fi \
+  && dpkg -i pandoc-3.1.3-1.deb \
+  && rm pandoc-3.1.3-1.deb && \
   rm -rf /var/lib/apt/lists/* /usr/share/icons && \
   dpkg-reconfigure -f noninteractive tzdata && \
   python3 -m pip install --no-cache-dir virtualenv

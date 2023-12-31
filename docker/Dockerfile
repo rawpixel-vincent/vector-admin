@@ -18,7 +18,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
   curl -LO https://github.com/yarnpkg/yarn/releases/download/v1.22.19/yarn_1.22.19_all.deb \
   && dpkg -i yarn_1.22.19_all.deb \
   && rm yarn_1.22.19_all.deb && \
-  if [ "$(uname -m)" ==  "aarch64" ] || [ "$(uname -m)" ==  "arm64" ] || [ "$(uname -m)" == "armv7l" ]; \
+  if [ "$(uname -m)" =  "aarch64" ] || [ "$(uname -m)" =  "arm64" ] || [ "$(uname -m)" = "armv7l" ]; \
   then \
   curl -L https://github.com/jgm/pandoc/releases/download/3.1.3/pandoc-3.1.3-1-arm64.deb > pandoc-3.1.3-1.deb; \
   else \

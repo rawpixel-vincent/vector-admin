@@ -47,12 +47,12 @@ USER root
 # Install frontend dependencies
 FROM base as frontend-deps
 COPY ./frontend/package.json ./frontend/yarn.lock ./frontend/
-RUN cd ./frontend/ && yarn install && yarn cache clean
+RUN cd ./frontend/ && yarn install --network-timeout 100000 && yarn cache clean
 
 # Install server dependencies
 FROM base as server-deps
 COPY ./backend/package.json ./backend/yarn.lock ./backend/
-RUN cd ./backend/ && yarn install --production && yarn cache clean
+RUN cd ./backend/ && yarn install --production --network-timeout 100000 && yarn cache clean
 
 # Build the frontend
 FROM frontend-deps as build-stage
@@ -71,9 +71,9 @@ COPY ./workers/ ./workers/
 
 # Install worker dependencies
 RUN cd /app/workers && \
-  yarn install --production && \
+  yarn install --production --network-timeout 100000 && \
   yarn cache clean && \
-  yarn add global inngest-cli
+  yarn add global inngest-cli --network-timeout 100000
 
 # Copy the document-processor
 COPY ./document-processor/ ./document-processor/
